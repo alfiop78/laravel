@@ -23,7 +23,13 @@
                           <p><span>ID : </span><span>{{$task->id}}</span></p>
                           <p><span>Title : </span><span>{{$task->title}}</span></p>
                           <p><span>Description : </span><span>{{$task->description}}</span></p>
-                          <p><a href="{{ route('tasks.edit', $task->id) }}" value="Edit">Edit</a></p>
+                          <!-- se il task non è completato visualizzo i tasti completed/edit -->
+                          @if (!$task->completed)
+                                <p><a href="{{ route('tasks.edit', $task->id) }}" value="Edit">Edit</a></p>
+                                <p><a href="{{ route('tasks.completed', $task->id) }}" value="Completed">Completed</a></p>
+                          @else
+                                <p><a href="{{ route('tasks.incomplete', $task->id) }}" value="Riattiva">Riattiva</a></p>
+                          @endif
                           <!-- il method delete va inviato con un form apposito -->
                           <p>
                             <form method="post" action="{{ route('tasks.delete', $task->id) }}">
